@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Game/Scenes/Menu_Scene.unity
     guid: 345b44fc78b163e488f74387e56af934
   - enabled: 1
+    path: Assets/Game/Scenes/Kuzey-Entrance.unity
+    guid: a75b0a68b03ea6e48af0eec3e57c939a
+  - enabled: 1
     path: Assets/Game/Scenes/Kuzey-Fire.unity
     guid: 70840ec1b830d0e46a1e4e0d0c82b304
   - enabled: 1
