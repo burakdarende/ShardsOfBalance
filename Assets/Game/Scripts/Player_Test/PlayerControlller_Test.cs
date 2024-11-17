@@ -6,7 +6,7 @@ public class PlayerControlller_Test : MonoBehaviour
 {
     [SerializeField] float speed = 5f;                  // Karakterin hareket hýzý
     [SerializeField] Camera mainCamera;                // Ana kamera referansý
-
+    [SerializeField] Animator animator;
     Vector3 inputVector;  // Hareket girdisi
     Rigidbody rb;         // Karakterin fiziksel hareketi için Rigidbody
 
@@ -27,7 +27,8 @@ public class PlayerControlller_Test : MonoBehaviour
     {
         // Hareket girdisini al
         inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
+        if (inputVector == Vector3.zero) animator.SetBool("isMoving", false);
+        else animator.SetBool("isMoving", true);
         // Karakteri fare pozisyonuna göre döndür
         RotatePlayerToMousePosition();
     }
