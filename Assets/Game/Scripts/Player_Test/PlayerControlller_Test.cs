@@ -40,8 +40,16 @@ public class PlayerControlller_Test : MonoBehaviour
 
     private void Movement()
     {
-        // Karakterin bakýþ yönüne göre hareket yönünü hesapla
-        Vector3 moveDirection = (transform.forward * inputVector.z + transform.right * inputVector.x).normalized;
+        // Kameranýn ileri yönünü al
+        Vector3 cameraForward = mainCamera.transform.forward;
+        cameraForward.y = 0; // Y eksenini sýfýrla, yalnýzca yatay düzlemde hareket
+
+        // Kameranýn sað yönünü al
+        Vector3 cameraRight = mainCamera.transform.right;
+        cameraRight.y = 0; // Y eksenini sýfýrla, yalnýzca yatay düzlemde hareket
+
+        // Karakterin hareket yönünü kamera yönüne göre hesapla
+        Vector3 moveDirection = (cameraForward * inputVector.z + cameraRight * inputVector.x).normalized;
 
         // Hareket vektörünü uygula
         Vector3 moveVector = moveDirection * speed;
@@ -55,7 +63,7 @@ public class PlayerControlller_Test : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
-            if (!hit.collider.CompareTag("Player"))
+            if (hit.collider.gameObject.layer != 3)
             {
                 // Hedef pozisyon (fare pozisyonu) ve mevcut pozisyon arasýndaki yön
                 Vector3 targetDirection = (hit.point - transform.position).normalized;
@@ -66,7 +74,7 @@ public class PlayerControlller_Test : MonoBehaviour
                 // Hedef rotasyonu hemen uygula (yumuþak geçiþ yok)
                 transform.rotation = Quaternion.LookRotation(targetDirection);
             }
-            
         }
+
     }
 }

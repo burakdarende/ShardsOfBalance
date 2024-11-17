@@ -6,11 +6,12 @@ TagManager:
   tags:
   - WayPoints
   - Enemy
+  - Dont
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - Dont
   - Water
   - UI
   - 
