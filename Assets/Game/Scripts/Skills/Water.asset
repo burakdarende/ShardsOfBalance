@@ -17,5 +17,5 @@ MonoBehaviour:
   Cooldown: 5
   ManaCost: 10
   Icon: {fileID: 0}
-  EffectPrefab: {fileID: 3081362037621676516, guid: 0e1cda1849280884a99fa85ea45ffbbc,
+  EffectPrefab: {fileID: 7053385775836331393, guid: 354b6251e950209409c75ab984acf000,
     type: 3}

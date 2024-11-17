@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-    public float life = 3;
+    public float life = 0.5f;
     public int damageAmount = 10;
 
     private void Awake()

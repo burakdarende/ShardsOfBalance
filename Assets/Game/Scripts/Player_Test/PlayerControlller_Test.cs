@@ -64,7 +64,7 @@ public class PlayerControlller_Test : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
-            if (hit.collider.gameObject.layer != 3)
+            if (hit.collider.gameObject.layer != 3 && !hit.collider.gameObject.CompareTag("Enemy"))
             {
                 // Hedef pozisyon (fare pozisyonu) ve mevcut pozisyon arasýndaki yön
                 Vector3 targetDirection = (hit.point - transform.position).normalized;
