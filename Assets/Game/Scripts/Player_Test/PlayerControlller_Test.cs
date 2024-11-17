@@ -4,56 +4,65 @@ using UnityEngine;
 
 public class PlayerControlller_Test : MonoBehaviour
 {
-    [SerializeField] float speed = 5f; 
-    [SerializeField] float mouseSensitivity = 100f;
+    [SerializeField] float speed = 5f;                  // Karakterin hareket hýzý
+    [SerializeField] Camera mainCamera;                // Ana kamera referansý
 
-    Vector3 inputVector;
-    Rigidbody rb;
+    Vector3 inputVector;  // Hareket girdisi
+    Rigidbody rb;         // Karakterin fiziksel hareketi için Rigidbody
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
 
-     
         if (rb != null)
         {
             rb.freezeRotation = true;
             rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         }
 
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None; // Fare serbest
     }
 
     void Update()
     {
-
+        // Hareket girdisini al
         inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-
-        RotatePlayer();
+        // Karakteri fare pozisyonuna göre döndür
+        RotatePlayerToMousePosition();
     }
 
     private void FixedUpdate()
     {
-
+        // Hareket fonksiyonunu fiziksel güncellemeye baðla
         Movement();
     }
 
     private void Movement()
     {
+        // Karakterin bakýþ yönüne göre hareket yönünü hesapla
+        Vector3 moveDirection = (transform.forward * inputVector.z + transform.right * inputVector.x).normalized;
 
-        Vector3 moveVector = transform.TransformDirection(inputVector.normalized) * speed;
+        // Hareket vektörünü uygula
+        Vector3 moveVector = moveDirection * speed;
 
-
-        rb.MovePosition(rb.position + moveVector * Time.fixedDeltaTime); 
+        rb.MovePosition(rb.position + moveVector * Time.fixedDeltaTime);
     }
 
-    private void RotatePlayer()
+    private void RotatePlayerToMousePosition()
     {
+        // Fare pozisyonunu dünya uzayýna çevir
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        {
+            // Hedef pozisyon (fare pozisyonu) ve mevcut pozisyon arasýndaki yön
+            Vector3 targetDirection = (hit.point - transform.position).normalized;
 
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            // Yükseklik farkýný sýfýrla (karakter sadece yatay eksende dönmeli)
+            targetDirection.y = 0;
 
-
-        transform.Rotate(Vector3.up * mouseX);
+            // Hedef rotasyonu hemen uygula (yumuþak geçiþ yok)
+            transform.rotation = Quaternion.LookRotation(targetDirection);
+        }
     }
 }
