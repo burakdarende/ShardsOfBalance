@@ -55,14 +55,18 @@ public class PlayerControlller_Test : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
-            // Hedef pozisyon (fare pozisyonu) ve mevcut pozisyon arasýndaki yön
-            Vector3 targetDirection = (hit.point - transform.position).normalized;
+            if (!hit.collider.CompareTag("Player"))
+            {
+                // Hedef pozisyon (fare pozisyonu) ve mevcut pozisyon arasýndaki yön
+                Vector3 targetDirection = (hit.point - transform.position).normalized;
 
-            // Yükseklik farkýný sýfýrla (karakter sadece yatay eksende dönmeli)
-            targetDirection.y = 0;
+                // Yükseklik farkýný sýfýrla (karakter sadece yatay eksende dönmeli)
+                targetDirection.y = 0;
 
-            // Hedef rotasyonu hemen uygula (yumuþak geçiþ yok)
-            transform.rotation = Quaternion.LookRotation(targetDirection);
+                // Hedef rotasyonu hemen uygula (yumuþak geçiþ yok)
+                transform.rotation = Quaternion.LookRotation(targetDirection);
+            }
+            
         }
     }
 }
